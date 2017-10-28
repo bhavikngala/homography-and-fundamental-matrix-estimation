@@ -23,4 +23,3 @@ function [descriptors] = extractFeatureNeighbourhood(I, r, c, ...
     end;
 
 end
-
