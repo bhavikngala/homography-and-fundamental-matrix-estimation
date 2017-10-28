@@ -33,5 +33,7 @@ euclid_dist = dist2(meanNormalizedFeatureNeighbourhood1, ...
 
 % TODO: step 3.b - compute normalized correlation instead of euclidean
 % distance
+normCorr = computeNormalizedCorrelation(featureNeighbourhood1, ...
+    featureNeighbourhood2);
 
 % step 4 - 
