@@ -24,16 +24,18 @@ featureNeighbourhood1 = extractFeatureNeighbourhood(I1, r1, c1, nhbhs1);
 featureNeighbourhood2 = extractFeatureNeighbourhood(I2, r2, c2, nhbhs2);
 
 % step 2.b -  mean normalize the descriptors.
-meanNormalizedFeatureNeighbourhood1 = meanNormalize(featureNeighbourhood1);
-meanNormalizedFeatureNeighbourhood2 = meanNormalize(featureNeighbourhood2);
+% meanNormalizedFeatureNeighbourhood1 = meanNormalize(featureNeighbourhood1);
+% meanNormalizedFeatureNeighbourhood2 = meanNormalize(featureNeighbourhood2);
 
 % step 3.a - compute distance between descriptors - Euclidean distance
-euclid_dist = dist2(meanNormalizedFeatureNeighbourhood1, ...
-    meanNormalizedFeatureNeighbourhood2);
+% euclid_dist = dist2(meanNormalizedFeatureNeighbourhood1, ...
+%     meanNormalizedFeatureNeighbourhood2);
 
-% TODO: step 3.b - compute normalized correlation instead of euclidean
+% step 3.b - compute normalized correlation instead of euclidean
 % distance
 normCorr = computeNormalizedCorrelation(featureNeighbourhood1, ...
     featureNeighbourhood2);
 
-% step 4 - 
+% step 4 - select top few hundred of descriptors with 
+[topRow, topCol, topNormCorr] = ...
+    getTopFewHundredRelatedDescriptorsIndices(normCorr, 100, 95);
