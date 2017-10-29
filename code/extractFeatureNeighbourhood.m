@@ -1,11 +1,13 @@
-function [descriptors] = extractFeatureNeighbourhood(I, r, c, ...
-    neighourhoodSize)
+function [descriptors, descriptorRows, descriptorCols] = ...
+    extractFeatureNeighbourhood(I, r, c, neighourhoodSize)
 %EXTRACTFEATURENEIGHBOURHOOD Summary of this function goes here
 %   Detailed explanation goes here
 
     [rows, cols] = size(I);
     descriptors = zeros([10, neighourhoodSize ^ 2]);
     descriptorRowIndex = 1;
+    descriptorRows = zero(10, 1);
+    descriptorCols = zero(10, 1);
     
     for i=1:1:size(r, 1)
         offset = floor(neighourhoodSize / 2);
@@ -18,6 +20,8 @@ function [descriptors] = extractFeatureNeighbourhood(I, r, c, ...
             temp = I(sy:ey, sx:ex);
             temp = temp';
             descriptors(descriptorRowIndex, :) = temp(:);
+            descriptorRows(descriptorRowIndex, 1) = r(i, 1);
+            descriptorCols(descriptorRowIndex, 1) = c(i, 1);
             descriptorRowIndex = descriptorRowIndex + 1;
         end;
     end;
