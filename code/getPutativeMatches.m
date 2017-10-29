@@ -1,5 +1,5 @@
-function [r, c, nCorr] = getTopFewHundredRelatedDescriptorsIndices( ...
-    normCorr, howMany, thresholdPercent)
+function [r, c, nCorr] = getPutativeMatches(normCorr, howMany, ...
+    thresholdPercent)
 %TOPFEWHUNDREDCORRELATEDDESCRIPTORS Summary of this function goes here
 %   Detailed explanation goes here
     threshold = max(normCorr(:)) * thresholdPercent / 100;
