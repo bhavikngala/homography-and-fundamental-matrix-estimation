@@ -6,8 +6,8 @@ function [descriptors, descriptorRows, descriptorCols] = ...
     [rows, cols] = size(I);
     descriptors = zeros([10, neighourhoodSize ^ 2]);
     descriptorRowIndex = 1;
-    descriptorRows = zero(10, 1);
-    descriptorCols = zero(10, 1);
+    descriptorRows = zeros(10, 1);
+    descriptorCols = zeros(10, 1);
     
     for i=1:1:size(r, 1)
         offset = floor(neighourhoodSize / 2);
