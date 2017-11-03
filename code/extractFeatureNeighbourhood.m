@@ -9,19 +9,19 @@ function [descriptors, descriptorRows, descriptorCols] = ...
     descriptorRows = zeros(10, 1);
     descriptorCols = zeros(10, 1);
     
+    offset = floor(neighourhoodSize / 2);
     for i=1:1:size(r, 1)
-        offset = floor(neighourhoodSize / 2);
-        sx = r(i, 1) - offset;
-        sy = c(i, 1) - offset;
-        ex = r(i, 1) + offset;
-        ey = c(i, 1) + offset;
+        rs = r(i) - offset;
+        cs = c(i) - offset;
+        re = r(i) + offset;
+        ce = c(i) + offset;
         
-        if 1 <= sy && rows >= ey && 1 <= sx && cols >= ex
-            temp = I(sy:ey, sx:ex);
+        if 1 <= rs && rows >= re && 1 <= cs && cols >= ce
+            temp = I(rs:re, cs:ce);
             temp = temp';
             descriptors(descriptorRowIndex, :) = temp(:);
-            descriptorRows(descriptorRowIndex, 1) = r(i, 1);
-            descriptorCols(descriptorRowIndex, 1) = c(i, 1);
+            descriptorRows(descriptorRowIndex, 1) = r(i);
+            descriptorCols(descriptorRowIndex, 1) = c(i);
             descriptorRowIndex = descriptorRowIndex + 1;
         end;
     end;

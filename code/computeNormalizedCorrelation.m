@@ -2,6 +2,12 @@ function [normCorr] = computeNormalizedCorrelation(A, B)
 %COMPUTENORMALIZEDCORRELATION Summary of this function goes here
 %   Detailed explanation goes here
 
+    meanA = mean(A, 2);
+    meanB = mean(B, 2);
+    
+    A = bsxfun(@minus, A, meanA);
+    B = bsxfun(@minus, B, meanB);
+
     normA = cellfun(@norm, num2cell(A, 2));
     normB = cellfun(@norm, num2cell(B, 2));
     
@@ -15,7 +21,6 @@ function [normCorr] = computeNormalizedCorrelation(A, B)
     
     for i=1:1:rA
         tempDot = dot(repmat(A(i,:), rB,1), B, 2);
-        normCorr(i, :) = tempDot(:);
+        normCorr(i, :) = tempDot;
     end;
 end
-

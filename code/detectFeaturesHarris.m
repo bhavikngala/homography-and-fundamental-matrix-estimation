@@ -10,7 +10,7 @@ function [rows, cols, neighbourhoodSize] = ...
 % ouput should return neighbourhood size along with keypoints
     
     [~, rows, cols] = harris(I, sigma, threshold, radius, displayFlag);
-    neighbourhoodSize = 2 * radius + 1;
+    neighbourhoodSize = 5 * (2 * radius + 1);
 
 end
 
