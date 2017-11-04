@@ -1,4 +1,4 @@
-close all;
+% close all;
 
 addpath(genpath('D:\Computer Science\Sem1\CSE573-Intro  to Computer Vision and Image Processing\Homework 2\hw2\code'));
 imLeft = 'D:\Computer Science\Sem1\CSE573-Intro  to Computer Vision and Image Processing\Homework 3\data\part1\uttower\left.jpg';
@@ -14,8 +14,8 @@ I1 = im2double(rgb2gray(imread('./../data/part1/uttower/left.jpg')));
 I2 = im2double(rgb2gray(imread('./../data/part1/uttower/right.jpg')));
 
 % equalize the histograms of the images
-% I1 = histeq(I1);
-% I2 = histeq(I2);
+I1 = histeq(I1);
+I2 = histeq(I2);
 % mean1 = mean(I1(:)); std1 = std(I1(:));
 % mean2 = mean(I2(:)); std2 = std(I2(:));
 % avgmean = (mean1 + mean2)/2; avgstd = (std1 + std2)/2;
@@ -38,7 +38,7 @@ normCorr = computeNormalizedCorrelation(featureNeighbourhood1, ...
     featureNeighbourhood2);
 
 % step 4 - select top few hundred of descriptors with 
-[topRow, topCol, topNormCorr] = getPutativeMatches(normCorr, 20, 95);
+[topRow, topCol, topNormCorr] = getPutativeMatches(normCorr, 50, 95);
 
 % step 4.a - plot putative matches
 disp(size(topRow));disp(size(topCol));
