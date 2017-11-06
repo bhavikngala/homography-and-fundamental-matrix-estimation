@@ -1,4 +1,6 @@
-function [ output_args ] = ransac(allPoints, threshold, numIterations)
+function [H, optimalNumInliers, optimalConsensusXY, ...
+    optimalConsensusXYPrime, optimalSampleSpace] = ...
+    ransac(xy, xyprime, threshold, numIterations)
 %RANSAC Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -12,7 +14,33 @@ function [ output_args ] = ransac(allPoints, threshold, numIterations)
 %     step 5: Afterwards, the model may be improved by reestimating it 
 %     using all members of the consensus set.
 
-    for i=1:1:numIterations
-    end;
+    optimalNumInliers = 0;
 
+    for i=1:1:numIterations
+%         step 1
+        sampleSpace = randperm(50, 4);
+%         step 2
+        [~, ~, ~, sampleH] = computeHomographyMatrix( ...
+            xy(sampleSpace, :), xyprime(sampleSpace, :));
+%         step 3
+        [numInliers, ~, sampleConsensusXY, sampleConsensusXYPrime] = ...
+            computeInliersOutliersForModel( ...
+            xy(setdiff(1:size(xy,1), sampleSpace), :), ...
+            xyprime(setdiff(1:size(xyprime,1), sampleSpace), :), ...
+            threshold);
+%         step 4
+        if numInliers > optimalNumInliers
+            optimalNumInliers = numInliers;
+            H = sampleH;
+            optimalConsensusXY = sampleConsensusXY;
+            optimalConsensusXYPrime = sampleConsensusXYPrime;
+            optimalSampleSpace = sampleSpace;
+        end;
+    end;
+    
+%     step 5
+    [~, ~, ~, H] = computeHomographyMatrix(...
+        cat(1, optimalConsensusXY, xy(sampleSpace, :)), ...
+        cat(1, optimalConsensusXYPrime, xyprime(sampleSpace, :)));
+    
 end
