@@ -19,7 +19,6 @@ function [S, U, minEigenValue, H] = computeHomographyMatrix(xy, xyprime)
                    (-1*(x * yprime)), (-1*(y * yprime)), (-1 * yprime)];
         pointsIndex = pointsIndex + 1;
     end;
-    A
 
 %     compute A.T * A
     ATA = A' * A;
@@ -30,4 +29,3 @@ function [S, U, minEigenValue, H] = computeHomographyMatrix(xy, xyprime)
 %     form H from that column in U
     H = reshape(U(:, vectorColumn), [3 3])';
 end
-

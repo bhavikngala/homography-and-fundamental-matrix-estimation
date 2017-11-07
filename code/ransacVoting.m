@@ -15,19 +15,15 @@ function [numInliers, numOutliers, consensusXY, consensusXYPrime] = ...
         
 %         step 2 compute error
         error = sum((xprimeyprime(1:2, :) - xyprime(i, :)').^2);
-        disp(error);
         
 %         step 3 threshold inlier or outlier
         if error <= threshold
             numInliers = numInliers + 1;
             consensusXY(i, :) = xy(i, :);
             consensusXYPrime(i, :) = xyprime(i, :);
-            fprintf('inlier\n');
         else
             numOutliers = numOutliers + 1;
-            fprintf('outlier\n');
         end;
     end;
 
 end
-
