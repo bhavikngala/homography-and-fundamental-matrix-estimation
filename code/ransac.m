@@ -15,6 +15,9 @@ function [H, optimalNumInliers, optimalConsensusXY, ...
 %     using all members of the consensus set.
 
     optimalNumInliers = 0;
+    optimalConsensusXY = zeros([4, 2]);
+    optimalConsensusXYPrime = zeros([4, 2]);
+    optimalSampleSpace = zeros([1, 4]);
 
     for i=1:1:numIterations
 %         step 1
@@ -37,7 +40,8 @@ function [H, optimalNumInliers, optimalConsensusXY, ...
             optimalSampleSpace = sampleSpace;
         end;
     end;
-    
+    size(optimalConsensusXY)
+    size(xy)
 %     step 5
     [~, ~, ~, H] = computeHomographyMatrix(...
         cat(1, optimalConsensusXY, xy(sampleSpace, :)), ...
