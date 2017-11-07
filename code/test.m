@@ -31,13 +31,27 @@ topRow = topRow';
 topCol = topCol';
 
 % step 4.a - plot putative matches
-disp(size(topRow));disp(size(topCol));
-plotPutativeMatches(I1, I2, r1, c1, r2, c2, topRow, topCol);
+% plotPutativeMatches(I1, I2, r1, c1, r2, c2, topRow, topCol);
 
 % step 5 - compute H using ransac
-ransacIterations = 1000;
-threshold = 0.1;
+ransacIterations = 5000;
+threshold = 10;
 
 [H, optimalNumInliers, optimalConsensusXY, optimalConsensusXYPrime, ...
     optimalSampleSpace] = ransac([c1(topRow), r1(topRow)], ...
     [c2(topCol), r2(topCol)], threshold, ransacIterations);
+
+dest = [0 0 1 1; 0 1 0 1; 1 1 1 1];
+source = H * dest;
+source = bsxfun(@rdivide, source, source(3, :));
+
+dest = dest';
+source = source';
+% warping and stitching images
+T1 = maketform('projective', dest(:, 1:2), source(:, 1:2));
+T2 = maketform('projective', source(:, 1:2), dest(:, 1:2));
+
+I1T = imtransform(I1, T1, 'bicubic');
+figure; imshow(I1T);
+I2T = imtransform(I2, T2, 'bicubic');
+figure; imshow(I2T);
