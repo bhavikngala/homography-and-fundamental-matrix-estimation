@@ -2,25 +2,24 @@ function [S, U, minEigenValue, H] = computeHomographyMatrix(xy, xyprime)
 %COMPUTEHOMOGRAPHYMATRIX Summary of this function goes here
 %   Detailed explanation goes here
     r = size(xy, 1);
-    A = zereos([2 * r, 9]);
+    A = zeros([2 * r, 9]);
+    
+    expand = @(A) feval(@(x)x{:}, num2cell(A));
     
 %     enforcing unit vector constraint
 %     construct matrix A, size 2Nx9
     pointsIndex = 1;
     for i=1:2: 2 * r
-        A(i, :) = [xy(pointsIndex, 1), xy(pointsIndex, 2), ...
-                   1, 0, 0, 0, ...
-                   (-1*(xy(pointsIndex, 1)*xyprime(pointsIndex, 1))), ...
-                   (-1*(xy(pointsIndex, 2)*xyprime(pointsIndex, 1))), ...
-                   (-1 * xy(pointsIndex, 1))];
-        A(i+1, :) = [0, 0, 0, ...
-                   xy(pointsIndex, 1), xy(pointsIndex, 2), ...
-                   1, ...
-                   (-1*(xy(pointsIndex, 1)*xyprime(pointsIndex, 2))), ...
-                   (-1*(xy(pointsIndex, 2)*xyprime(pointsIndex, 2))), ...
-                   (-1 * xy(pointsIndex, 2))];
+        [x, y] = expand(xy(pointsIndex, :));
+        [xprime, yprime] = expand(xyprime(pointsIndex, :));
+        
+        A(i, :) = [x, y, 1, 0, 0, 0, ...
+                   (-1*(x * xprime)), (-1*(y * xprime)), (-1 * xprime)];
+        A(i+1, :) = [0, 0, 0, x, y, 1, ...
+                   (-1*(x * yprime)), (-1*(y * yprime)), (-1 * yprime)];
         pointsIndex = pointsIndex + 1;
     end;
+    A
 
 %     compute A.T * A
     ATA = A' * A;
