@@ -24,5 +24,11 @@ function [F] = fitFundamentalMatrixunnormalized(xy, xyprime)
     [~, vectorColumn] = min(diag(S));
 %     form H from that column in U
     F = reshape(U(:, vectorColumn), [3, 3])';
+%     enfornce rank 2 constraint on F
+    [U, S, V] = svd(F);
+%     set smalled element in S to zero
+    S(find(min(S(:)))) = 0;
+%     recompute F: F = U*S*V'
+    F = U * S * V';
 end
 
