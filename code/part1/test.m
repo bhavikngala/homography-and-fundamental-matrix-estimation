@@ -51,7 +51,7 @@ source = source';
 T1 = maketform('projective', dest(:, 1:2), source(:, 1:2));
 T2 = maketform('projective', source(:, 1:2), dest(:, 1:2));
 
-I1T = imtransform(I1, T1, 'bicubic');
+[I1T, xdata, ydata] = imtransform(I1, T1, 'bicubic');
 figure; imshow(I1T);
 I2T = imtransform(I2, T2, 'bicubic');
 figure; imshow(I2T);
