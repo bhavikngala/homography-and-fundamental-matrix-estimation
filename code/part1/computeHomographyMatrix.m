@@ -25,7 +25,7 @@ function [S, U, minEigenValue, H] = computeHomographyMatrix(xy, xyprime)
 %     compute SVD
     [U, S, ~] = svd(ATA);
 %     find column number associated with min eigen value
-    [minEigenValue, vectorColumn] = min(S(find(S)));
+    [minEigenValue, vectorColumn] = min(diag(S));
 %     form H from that column in U
     H = reshape(U(:, vectorColumn), [3 3])';
 end

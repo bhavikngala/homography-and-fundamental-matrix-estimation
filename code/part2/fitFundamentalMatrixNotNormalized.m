@@ -21,7 +21,7 @@ function [F] = fitFundamentalMatrixunnormalized(xy, xyprime)
 %     compute SVD
     [U, S, ~] = svd(ATA);
 %     find column number associated with min eigen value
-    [~, vectorColumn] = min(S(find(S)));
+    [~, vectorColumn] = min(diag(S));
 %     form H from that column in U
     F = reshape(U(:, vectorColumn), [3, 3])';
 end
