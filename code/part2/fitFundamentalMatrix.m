@@ -1,8 +1,13 @@
-function [F] = fitFundamentalMatrixunnormalized(xy, xyprime)
+function [F] = fitFundamentalMatrix(xy, xyprime, normalizeFlag)
 %FITFUNDAMENTALMATRIXUNNORMALIZED Summary of this function goes here
 %   Detailed explanation goes here
     r = size(xy, 1);
     A = zeros(r, 9);
+    
+    if normalizeFlag
+        Txy = computeCoordinateNormalizingMatrix(xy);
+        Txyprime = computeCoordinateNormalizingMatrix(xyprime);
+    end;
     
     expand = @(A) feval(@(x)x{:}, num2cell(A));
     
@@ -11,6 +16,11 @@ function [F] = fitFundamentalMatrixunnormalized(xy, xyprime)
     for i = 1:1:r
         [x, y] = expand(xy(i, :));
         [xprime, yprime] = expand(xyprime(i, :));
+        
+        if normalizeFlag
+            [x, y, ~] = expand(Txy * [x; y; 1]);
+            [xprime, yprime, ~] = expand(Txyprime * [xprime; yprime; 1]);
+        end;
         
         A(i, :) = [ x*xprime, x*yprime, x, y*xprime, y*yprime, y, ...
                     xprime, yprime, 1];
@@ -30,5 +40,9 @@ function [F] = fitFundamentalMatrixunnormalized(xy, xyprime)
     S(find(min(S(:)))) = 0;
 %     recompute F: F = U*S*V'
     F = U * S * V';
+    
+    if normalizeFlag
+        F = Txyprime * F * Txy;
+    end;
 end
 
