@@ -1,5 +1,5 @@
 function [numInliers, numOutliers, consensusXY, consensusXYPrime] = ...
-    ransacVoting(xy, xyprime, F,   )
+    ransacVoting(xy, xyprime, F, threshold)
 %COMPUTEINLIERSOUTLIERSFORMODEL Summary of this function goes here
 %   Detailed explanation goes here
     numInliers = 0;
