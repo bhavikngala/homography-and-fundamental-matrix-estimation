@@ -1,7 +1,7 @@
 function [stitchedImage] = stitchImagesBasedOnHomography(im1, im2, H)
 %STITCHIMAGESBASEDONHOMOGRAPHY Summary of this function goes here
 %   Detailed explanation goes here
-    [y, x, ~] = size(im2);
+    [y, x, ~] = size(im1);
     source = [1 1 x x; ...
               1 y 1 y; ...
               1 1 1 1];
