@@ -29,11 +29,11 @@ function [F] = fitFundamentalMatrix(xy, xyprime, normalizeFlag)
 %     compute A.T * A
 %     ATA = A' * A;
 %     compute SVD
-    [U, S, V] = svd(A);
+    [U, S, ~] = svd(A' * A);
 %     find column number associated with min eigen value
     [~, vectorColumn] = min(diag(S));
 %     form H from that column in U
-    F = reshape(V(:, vectorColumn), [3, 3]);
+    F = reshape(U(:, vectorColumn), [3, 3]);
 %     enfornce rank 2 constraint on F
     [U, S, V] = svd(F);
 %     set smalled element in S to zero
@@ -43,7 +43,7 @@ function [F] = fitFundamentalMatrix(xy, xyprime, normalizeFlag)
     F = U * S * V';
     
     if normalizeFlag
-        F = inv(Txyprime) * F * Txy;
+        F = Txyprime' * F * Txy;
     end;
 end
 
