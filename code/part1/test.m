@@ -1,8 +1,8 @@
 clear all;
 close all;
 % read images 
-I1C = imread('./../data/part1/ledge/1.jpg');
-I2C = imread('./../data/part1/ledge/2.jpg');
+I1C = imread('./../data/part1/uttower/left.jpg');
+I2C = imread('./../data/part1/uttower/right.jpg');
 I1 = im2double(rgb2gray(I1C));
 I2 = im2double(rgb2gray(I2C));
 
