@@ -1,4 +1,5 @@
-function [numInliers, numOutliers, consensusXY, consensusXYPrime] = ...
+function [numInliers, numOutliers, consensusXY, consensusXYPrime, ...
+    inlierResidue] = ...
     ransacVoting(xy, xyprime, F, threshold)
 %COMPUTEINLIERSOUTLIERSFORMODEL Summary of this function goes here
 %   Detailed explanation goes here
@@ -7,7 +8,9 @@ function [numInliers, numOutliers, consensusXY, consensusXYPrime] = ...
     
     consensusXY = zeros([4, 2]);
     consensusXYPrime = zeros([4, 2]);
+    inlierResidue = 0;
 
+    inlierIndex = 1;
     for i=1:1:size(xy, 1)
 %         step 1 compute x'Fx; should be zero
         s = [xyprime(i,:), 1] * F * [xy(i,:)'; 1];
@@ -18,11 +21,14 @@ function [numInliers, numOutliers, consensusXY, consensusXYPrime] = ...
 %         step 3 threshold inlier or outlier
         if error <= threshold
             numInliers = numInliers + 1;
-            consensusXY(i, :) = xy(i, :);
-            consensusXYPrime(i, :) = xyprime(i, :);
+            consensusXY(inlierIndex, :) = xy(i, :);
+            consensusXYPrime(inlierIndex, :) = xyprime(i, :);
+            inlierResidue = inlierResidue + error;
+            inlierIndex = inlierIndex + 1;
         else
             numOutliers = numOutliers + 1;
         end;
+        inlierResidue = inlierResidue / numInliers;
     end;
 
 end
