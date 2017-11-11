@@ -13,47 +13,47 @@ function [stitchedImage] = stitchImagesBasedOnHomography(im1, im2, H)
     
     T1 = maketform('projective', source(1:2, :)', dest(1:2, :)');
     [I1T, xdata, ydata] = imtransform(im1, T1, 'bicubic');
-    figure; imshow(im1);
-    figure; imshow(I1T);
-    figure; imshow(im2);
+%     figure; imshow(im1);
+%     figure; imshow(I1T);
+%     figure; imshow(im2);
     
 %     find the farthest point in the negative x direction
     nx = min(dest(1, :));
     ny = min(dest(2, :));
     
 %     find the farthest point in the positive y direction
-    px = ceil(max(dest(1, :)));
-    py = ceil(max(dest(2, :)));
+    px = max(dest(1, :));
+    py = max(dest(2, :));
     
-    [r, c, ~] = size(I1T);
+    [r, c, ~] = size(I1T)
     [i2r, i2c, ~] = size(im2);
     fprintf('ny %f nx %f i2r %f i2c %f\n',ny, nx, i2r, i2c);
 
     compositeRows = 0;
     compositeCols = 0;
     
-    if ny < 0 && py > i2r
-        compositeRows = r;
+    if ny < 0 && py < i2r
+        compositeRows = r + i2r - floor(abs(py))+2;
+    elseif ny < 0 && py > i2r
+        compositeRows = r+2;
     else
-        compositeRows = ceil(abs(ny)) + i2r + 1;
+        compositeRows = r + i2r - floor(abs(nx))+2;
     end;
-    if nx < 0 && px > i2c
-        compositeCols = c;
-    else
-        compositeCols = ceil(abs(nx)) + i2c + 1;
-    end;
-    
-    nx = ceil(abs(nx));
-    ny = ceil(abs(ny));
+    compositeCols = c + i2c - floor(abs(px))+2;
     
     composite1 = zeros([compositeRows, compositeCols, 3]);
     composite2 = zeros([compositeRows, compositeCols, 3]);
-    
-    [r, c, ~] = size(I1T);
-    composite1(1:r, 1:c, :) = I1T;
-    composite2(ny + 2:ny + i2r + 1, nx + 2:nx + i2c + 1, :) = im2;
-    disp('size composite1');size(composite1)
-    disp('size composite2');size(composite2)
+    if ny < 0
+        composite1(1:r, 1:c, :) = I1T;
+        composite2(ceil(abs(ny))+1:ceil(abs(ny))+i2r, ...
+            ceil(abs(nx))+2:ceil(abs(nx))+i2c+1, :) = im2;
+    else
+        composite1(ceil(abs(ny))-1:ceil(abs(py)), 1:c, :) = I1T;
+        composite2(1:i2r, ...
+            ceil(abs(nx))+2:ceil(abs(nx))+i2c+1, :) = im2;
+    end;
+%     disp('dim of composite1');size(composite1)
+%     disp('dim of composite2');size(composite2)
     stitchedImage = composite1 + composite2;
     overlap = composite1 & composite2;
     stitchedImage(overlap) = stitchedImage(overlap)/2;
