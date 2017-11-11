@@ -17,14 +17,21 @@ function [threeDCoords] = compute3DCoordinate(xy, xyprime, P, Pprime)
         [x, y] = expand(xy(i, :));
         [xprime, yprime] = expand(xyprime(i, :));
         
-        A = [x     *P3      - P1; ...
-             y     *P3      - P2; ...
-             xprime*Pprime3 - Pprime1; ...
-             yprime*Pprime3 - Pprime2];
+%         A = [x     *P3      - P1; ...
+%              y     *P3      - P2; ...
+%              xprime*Pprime3 - Pprime1; ...
+%              yprime*Pprime3 - Pprime2];
+
+        A = [((y*P3) - P2);
+             (P1 - (x * P3));
+             ((yprime*Pprime3) - Pprime2);
+             (Pprime1 - (xprime*Pprime3))];
+         size(A)
          
          [U, S, ~] = svd(A' * A);
          [~, vectorColumn] = min(diag(S));
          X = (U(:, vectorColumn))';
+         size(X)
          X(1:3) = X(1:3) ./ X(1, 4);
          threeDCoords(i, :) = X;
     end;
