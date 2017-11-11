@@ -3,6 +3,10 @@ function [numInliers, numOutliers, consensusXY, consensusXYPrime, ...
     ransacVoting(xy, xyprime, F, threshold)
 %COMPUTEINLIERSOUTLIERSFORMODEL Summary of this function goes here
 %   Detailed explanation goes here
+
+%   simply finds number of inliers, outliers, inlier residue for given set
+%   and F, basically the voting part of RANSAC.
+
     numInliers = 0;
     numOutliers = 0;
     

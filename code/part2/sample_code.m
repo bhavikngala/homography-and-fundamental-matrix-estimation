@@ -1,3 +1,5 @@
+% compute Fundamental matric for pair of images and plot them
+
 close all;
 normalizeFlag = 1;
 

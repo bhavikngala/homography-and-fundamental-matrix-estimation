@@ -1,3 +1,6 @@
+% computes fundamental matrix for pair of images, features are detected and
+% matches are computed, RANSAC is ran on the matches to find optimal F
+
 close all;
 % read images 
 I1 = im2double(rgb2gray(imread('./../data/part2/library1.jpg')));

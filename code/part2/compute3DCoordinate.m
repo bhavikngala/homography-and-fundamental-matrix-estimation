@@ -1,6 +1,8 @@
 function [threeDCoords] = compute3DCoordinate(xy, xyprime, P, Pprime)
 %COMPUTE3DCOORDINATE Summary of this function goes here
 %   Detailed explanation goes here
+%     computes 3D points for given input points and camera matrices
+
     threeDCoords = zeros(size(xy, 1), 4);
     
 %     inline function expand borrowed from the internet

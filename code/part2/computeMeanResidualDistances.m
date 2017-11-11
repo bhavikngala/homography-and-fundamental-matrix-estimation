@@ -2,6 +2,8 @@ function [meanResidualAlgebraicDistances, meanResidualGeometricDistances...
     ] = computeMeanResidualDistances(xy, xyprime, F)
 %COMPUTEMEANRESIDUALDISTANCES Summary of this function goes here
 %   Detailed explanation goes here
+%     computes mean residual distances for given x, x', and F
+%     computes both mean algebraic residue and mean geometric residue
 
 %     reference: lec16 epipolar geometry - slide 32
 

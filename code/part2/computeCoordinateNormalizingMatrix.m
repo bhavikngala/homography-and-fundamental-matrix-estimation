@@ -1,6 +1,7 @@
 function [T] = computeCoordinateNormalizingMatrix(xy)
 %COMPUTECOORDINATENORMALIZINGMATRIX Summary of this function goes here
 %   Detailed explanation goes here
+%     constructs a non isotropic normalization matrix for input coordinates
 
 %     Non isotropic normalization
 %     compute mean of x coordinates and y coordinates

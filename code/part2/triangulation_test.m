@@ -1,5 +1,7 @@
 close all;
 
+% triangulates the points in 3D space and plots them
+
 house1 = './../data/part2/house1.jpg';
 house2 = './../data/part2/house2.jpg';
 houseMatches = './../data/part2/house_matches.txt';

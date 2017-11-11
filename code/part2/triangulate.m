@@ -1,6 +1,9 @@
 function triangulate(I1path, I2path, groundtruth, cam1, cam2)
 %TRIANGULATE Summary of this function goes here
 %   Detailed explanation goes here
+%   compute camera centres
+%   computes 3D coordinates of image points
+%   plots the points in 3D plot
 
     I1 = imread(I1path);
     I2 = imread(I2path);

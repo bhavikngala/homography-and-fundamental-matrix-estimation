@@ -1,6 +1,11 @@
 function [F] = fitFundamentalMatrix(xy, xyprime, normalizeFlag)
 %FITFUNDAMENTALMATRIXUNNORMALIZED Summary of this function goes here
 %   Detailed explanation goes here
+
+%     compute fundamental matrix for given match pairs
+%     uses normalization method if the normalized flag is set otherwise
+%     uses unnormalized approach
+
     r = size(xy, 1);
     A = zeros(r, 9);
     
