@@ -1,8 +1,8 @@
 clear all;
 close all;
 % read images 
-I1C = imread('./../data/part1/uttower/left.jpg');
-I2C = imread('./../data/part1/uttower/right.jpg');
+I1C = imread('./../data/part1/ledge/1.jpg');
+I2C = imread('./../data/part1/ledge/2.jpg');
 I1 = im2double(rgb2gray(I1C));
 I2 = im2double(rgb2gray(I2C));
 
@@ -29,7 +29,7 @@ normCorr = computeNormalizedCorrelation(featureNeighbourhood1, ...
     featureNeighbourhood2);
 
 % step 4 - select top few hundred of descriptors with 
-[topRow, topCol, topNormCorr] = getPutativeMatches(normCorr, 50, 95);
+[topRow, topCol, topNormCorr] = getPutativeMatches(normCorr, 150, 95);
 topRow = topRow';
 topCol = topCol';
 
@@ -37,12 +37,17 @@ topCol = topCol';
 plotPutativeMatches(I1, I2, r1, c1, r2, c2, topRow, topCol);
 
 % step 5 - compute H using ransac
-ransacIterations = 1000;
+ransacIterations = 500;
 threshold = 1;
 
 [H, optimalNumInliers, optimalConsensusXY, optimalConsensusXYPrime, ...
-    optimalSampleSpace] = ransac([c1(topRow), r1(topRow)], ...
-    [c2(topCol), r2(topCol)], threshold, ransacIterations);
+    optimalSampleSpace, optimalInlierResidue] = ransac([c1(topRow), ...
+    r1(topRow)], [c2(topCol), r2(topCol)], threshold, ransacIterations);
+
+plotPutativeMatches(I1, I2, optimalConsensusXY(:,2), ....
+    optimalConsensusXY(:,1), optimalConsensusXYPrime(:,2), ...
+    optimalConsensusXYPrime(:,1), [1:1:size(optimalConsensusXY, 1)] ,...
+    [1:1:size(optimalConsensusXY, 1)]);
 
 stitchedImage = stitchImagesBasedOnHomography(I1C, I2C, H);
 figure; imshow(stitchedImage);
