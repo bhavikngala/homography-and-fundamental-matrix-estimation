@@ -1,6 +1,7 @@
 function [normCorr] = computeNormalizedCorrelation(A, B)
 %COMPUTENORMALIZEDCORRELATION Summary of this function goes here
 %   Detailed explanation goes here
+%     computes normalized corelation between every input match pair
 
     meanA = mean(A, 2);
     meanB = mean(B, 2);

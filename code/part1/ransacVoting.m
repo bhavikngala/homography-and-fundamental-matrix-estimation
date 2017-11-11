@@ -2,6 +2,8 @@ function [numInliers, numOutliers, consensusXY, consensusXYPrime, ...
     inlierResidue] = ransacVoting(xy, xyprime, H, threshold)
 %COMPUTEINLIERSOUTLIERSFORMODEL Summary of this function goes here
 %   Detailed explanation goes here
+%     RANSAC voting round, computes number of inliers, outliers, consensus
+%     set, inlier residue
     numInliers = 0;
     numOutliers = 0;
     

@@ -2,6 +2,7 @@ function plotPutativeMatches(I1, I2, I1featureRows, I1featureCols, ...
     I2featureRows, I2featureCols, putativeRows, putativeCols)
 %PLOTPUTATIVEMATCHES Summary of this function goes here
 %   Detailed explanation goes here
+%   plots lines between corresponding putative matches
     
     I = [I1, I2];
     figure;

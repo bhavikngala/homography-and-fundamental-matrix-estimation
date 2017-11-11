@@ -2,6 +2,7 @@ function [descriptors, descriptorRows, descriptorCols] = ...
     extractFeatureNeighbourhood(I, r, c, neighourhoodSize)
 %EXTRACTFEATURENEIGHBOURHOOD Summary of this function goes here
 %   Detailed explanation goes here
+% extract neighbourhood of the feature
 
     [rows, cols] = size(I);
     descriptors = zeros([10, neighourhoodSize ^ 2]);

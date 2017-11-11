@@ -1,6 +1,7 @@
 function plotDescriptorPoints(I1, I2, r1, c1, r2, c2)
 %PLOTPUTATIVEMATCHES Summary of this function goes here
 %   Detailed explanation goes here
+%     function plots descriptor points on 2 images placed side by side
     
     I = [I1, I2];
     figure;

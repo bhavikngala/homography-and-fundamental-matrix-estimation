@@ -1,6 +1,8 @@
 function [S, U, minEigenValue, H] = computeHomographyMatrix(xy, xyprime)
 %COMPUTEHOMOGRAPHYMATRIX Summary of this function goes here
 %   Detailed explanation goes here
+%     computes homography matrix for given coordinates
+%     Uses the SVD method to compute H
     r = size(xy, 1);
     A = zeros([2 * r, 9]);
     

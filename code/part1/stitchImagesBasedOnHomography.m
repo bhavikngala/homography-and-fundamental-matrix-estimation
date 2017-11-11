@@ -1,6 +1,8 @@
 function [stitchedImage] = stitchImagesBasedOnHomography(im1, im2, H)
 %STITCHIMAGESBASEDONHOMOGRAPHY Summary of this function goes here
 %   Detailed explanation goes here
+%     Stitches 2 images based on homography tranformation
+
     [y, x, ~] = size(im1);
     source = [1 1 x x; ...
               1 y 1 y; ...
@@ -13,9 +15,6 @@ function [stitchedImage] = stitchImagesBasedOnHomography(im1, im2, H)
     
     T1 = maketform('projective', source(1:2, :)', dest(1:2, :)');
     [I1T, xdata, ydata] = imtransform(im1, T1, 'bicubic');
-%     figure; imshow(im1);
-%     figure; imshow(I1T);
-%     figure; imshow(im2);
     
 %     find the farthest point in the negative x direction
     nx = min(dest(1, :));
@@ -52,13 +51,10 @@ function [stitchedImage] = stitchImagesBasedOnHomography(im1, im2, H)
         composite2(1:i2r, ...
             ceil(abs(nx))+2:ceil(abs(nx))+i2c+1, :) = im2;
     end;
-%     disp('dim of composite1');size(composite1)
-%     disp('dim of composite2');size(composite2)
     stitchedImage = composite1 + composite2;
     overlap = composite1 & composite2;
     stitchedImage(overlap) = stitchedImage(overlap)/2;
     stitchedImage = uint8(stitchedImage);
-%     figure; imshow(stitchedImage);
 
 end
 

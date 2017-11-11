@@ -1,3 +1,5 @@
+% script computes homography between 2 images then stitched them
+
 clear all;
 close all;
 % read images 
