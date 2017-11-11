@@ -1,10 +1,13 @@
+close all;
+normalizeFlag = 1;
+
 %%
 %% load images and match files for the first example
 %%
 
-I1 = imread('./../../data/part2/house1.jpg');
-I2 = imread('./../../data/part2/house2.jpg');
-matches = load('./../../data/part2/house_matches.txt'); 
+I1 = imread('./../data/part2/house1.jpg');
+I2 = imread('./../data/part2/house2.jpg');
+matches = load('./../data/part2/house_matches.txt'); 
 % this is a N x 4 file where the first two numbers of each row
 % are coordinates of corners in the first image and the last two
 % are coordinates of corresponding corners in the second image: 
@@ -22,7 +25,8 @@ imshow([I1 I2]); hold on;
 plot(matches(:,1), matches(:,2), '+r');
 plot(matches(:,3)+size(I1,2), matches(:,4), '+r');
 line([matches(:,1) matches(:,3) + size(I1,2)]', matches(:,[2 4])', 'Color', 'r');
-pause;
+% pause;
+figure;
 
 %%
 %% display second image with epipolar lines reprojected 
@@ -30,7 +34,15 @@ pause;
 %%
 
 % first, fit fundamental matrix to the matches
-F = fit_fundamental(matches); % this is a function that you should write
+F = fitFundamentalMatrix([matches(:,1), matches(:,2)], ...
+    [matches(:, 3), matches(:, 4)], ...
+    normalizeFlag);
+
+[meanResidualAlgebraicDistance, meanResidualGeometricDistance] = ...
+    computeMeanResidualDistances([matches(:, 1:2)], ... % x
+                                 [matches(:, 3:4)], ... % x'
+                                 F);                    % F
+% F = fit_fundamental(matches); % this is a function that you should write
 L = (F * [matches(:,1:2) ones(N,1)]')'; % transform points from 
 % the first image to get epipolar lines in the second image
 
